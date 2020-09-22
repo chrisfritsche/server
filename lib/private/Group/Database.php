@@ -299,6 +299,9 @@ class Database extends ABackend implements
 		}
 		$result->closeCursor();
 
+		usort($groups, function ($a, $b) {
+			return strcasecmp($a, $b);
+		});
 		return $groups;
 	}
 
