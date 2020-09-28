@@ -131,6 +131,13 @@ class ContactsStore implements IContactsStore {
 
 		$selfGroups = $this->groupManager->getUserGroupIds($self);
 
+		// check for existing global scoped groups to include them into selfGroups
+		$globalScopedGroupList = $this->config->getAppValue('core', 'shareapi_global_scoped_group_list', '');
+		$globalScopedGroups = json_decode($globalScopedGroupList);
+		if (!is_null($globalScopedGroups)) {
+			$selfGroups = array_merge($selfGroups, $globalScopedGroups);
+		}
+
 		if ($excludedGroups) {
 			$excludedGroups = $this->config->getAppValue('core', 'shareapi_exclude_groups_list', '');
 			$decodedExcludeGroups = json_decode($excludedGroups, true);

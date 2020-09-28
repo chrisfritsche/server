@@ -371,6 +371,7 @@ OC.L10N.register(
     "Restrict users to only share with users in their groups" : "Benutzer auf das Teilen innerhalb ihrer Gruppen beschränken",
     "Exclude groups from sharing" : "Gruppen von Freigaben ausschließen",
     "These groups will still be able to receive shares, but not to initiate them." : "Diese Gruppen können weiterhin Freigaben empfangen, aber selbst keine mehr initiieren.",
+    "Add exceptions: Groups that can always receive shares." : "Ausnahmen hinzufügen: Gruppen die immer Freigaben empfangen können.",
     "Allow username autocompletion in share dialog. If this is disabled the full username or email address needs to be entered." : "Die Auto-Vervollständigung von Benutzernamen im Teilen-Dialog erlauben. Wenn dies deaktiviert ist, müssen Benutzername oder E-Mail-Adresse vollständig eingegeben werden.",
     "Restrict username autocompletion to users within the same groups" : "Automatische Vervollständigung der Benutzernamen auf Benutzer innerhalb der gleichen Gruppen beschränken",
     "Show disclaimer text on the public link upload page. (Only shown when the file list is hidden.)" : "Zeige Haftungsausschluss auf der öffentlichen Upload-Seite. (Wird nur gezeigt wenn die Dateiliste nicht angezeigt wird.) ",
