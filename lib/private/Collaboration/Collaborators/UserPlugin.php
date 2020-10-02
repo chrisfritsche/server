@@ -73,6 +73,12 @@ class UserPlugin implements ISearchPlugin {
 		$hasMoreResults = false;
 
 		$currentUserGroups = $this->groupManager->getUserGroupIds($this->userSession->getUser());
+		// check for global scoped groups to include them
+		$globalScopedGroupList = $this->config->getAppValue('core', 'shareapi_global_scoped_group_list', '');
+		$globalScopedGroups = json_decode($globalScopedGroupList);
+		if (!is_null($globalScopedGroups)) {
+			$currentUserGroups = array_merge($currentUserGroups, $globalScopedGroups);
+		}
 		if ($this->shareWithGroupOnly) {
 			// Search in all the groups this user is part of
 			foreach ($currentUserGroups as $userGroupId) {

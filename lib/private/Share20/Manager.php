@@ -528,12 +528,19 @@ class Manager implements IManager {
 		if ($this->shareWithGroupMembersOnly()) {
 			$sharedBy = $this->userManager->get($share->getSharedBy());
 			$sharedWith = $this->userManager->get($share->getSharedWith());
+			$sharedByGroups = $this->groupManager->getUserGroupIds($sharedBy);
+			$sharedWithGroups = $this->groupManager->getUserGroupIds($sharedWith);
+
+			// check for global scoped groups to include them into sharedWithGroups
+			$globalScopedGroupList = $this->config->getAppValue('core', 'shareapi_global_scoped_group_list', '');
+			$globalScopedGroups = json_decode($globalScopedGroupList);
 			// Verify we can share with this user
-			$groups = array_intersect(
-					$this->groupManager->getUserGroupIds($sharedBy),
-					$this->groupManager->getUserGroupIds($sharedWith)
+			$groupsIntersection = array_intersect(
+				$sharedByGroups,
+				$sharedWithGroups
 			);
-			if (empty($groups)) {
+			$globalGroupsIntersection = array_intersect($sharedWithGroups, $globalScopedGroups);
+			if (empty($groupsIntersection) && empty($globalGroupsIntersection)) {
 				throw new \Exception('Sharing is only allowed with group members');
 			}
 		}
@@ -590,7 +597,10 @@ class Manager implements IManager {
 		if ($this->shareWithGroupMembersOnly()) {
 			$sharedBy = $this->userManager->get($share->getSharedBy());
 			$sharedWith = $this->groupManager->get($share->getSharedWith());
-			if (is_null($sharedWith) || !$sharedWith->inGroup($sharedBy)) {
+			$globalScopedGroupList = $this->config->getAppValue('core', 'shareapi_global_scoped_group_list', '');
+			$globalScopedGroups = json_decode($globalScopedGroupList);
+
+			if (is_null($sharedWith) || (!$sharedWith->inGroup($sharedBy) && !in_array($sharedWith->getGID(), $globalScopedGroups))) {
 				throw new \Exception('Sharing is only allowed within your own groups');
 			}
 		}

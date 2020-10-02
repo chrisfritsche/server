@@ -39,6 +39,7 @@ use OCP\Share;
 class GroupPlugin implements ISearchPlugin {
 	protected $shareeEnumeration;
 	protected $shareWithGroupOnly;
+	protected $shareeEnumerationInGroupOnly;
 
 	/** @var IGroupManager */
 	private $groupManager;
@@ -77,6 +78,12 @@ class GroupPlugin implements ISearchPlugin {
 			$userGroups = array_map(function (IGroup $group) {
 				return $group->getGID();
 			}, $userGroups);
+			// check for global scoped groups to include them
+			$globalScopedGroupList = $this->config->getAppValue('core', 'shareapi_global_scoped_group_list', '');
+			$globalScopedGroups = json_decode($globalScopedGroupList);
+			if (!is_null($globalScopedGroups)) {
+				$userGroups = array_merge($userGroups, $globalScopedGroups);
+			}
 			$groupIds = array_intersect($groupIds, $userGroups);
 		}
 

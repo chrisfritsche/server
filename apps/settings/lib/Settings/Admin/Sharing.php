@@ -85,7 +85,7 @@ class Sharing implements ISettings {
 			'shareEnforceExpireDate'               => $this->config->getAppValue('core', 'shareapi_enforce_expire_date', 'no'),
 			'shareExcludeGroups'                   => $this->config->getAppValue('core', 'shareapi_exclude_groups', 'no') === 'yes',
 			'shareExcludedGroupsList'              => $excludeGroupsList,
-			'shareGlobalScopedGroupList'          => $globalScopedGroupList,
+			'shareGlobalScopedGroupList'           => $globalScopedGroupList,
 			'publicShareDisclaimerText'            => $this->config->getAppValue('core', 'shareapi_public_link_disclaimertext', null),
 			'enableLinkPasswordByDefault'          => $this->config->getAppValue('core', 'shareapi_enable_link_password_by_default', 'no'),
 			'shareApiDefaultPermissions'           => $this->config->getAppValue('core', 'shareapi_default_permissions', Constants::PERMISSION_ALL),
